@@ -1,9 +1,23 @@
 import "lucide-static/font/Lucide.css";
 import "./style.css";
+import template from "./counter.hbs";
+import { compile } from "handlebars";
 
-import template from "./test.hbs";
+const root = document.getElementById("app");
 
-const result = template({
-  name: "teest",
+let counter = 0;
+
+const hbs = compile(template());
+root.innerHTML = hbs({ counter });
+
+const plus = document.querySelector(".plus");
+const content = document.querySelector(".content");
+const minus = document.querySelector(".minus");
+
+plus.addEventListener("click", () => {
+  content.textContent = counter += 1;
 });
-console.log(result);
+
+minus.addEventListener("click", () => {
+  content.textContent = counter -= 1;
+});
