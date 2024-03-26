@@ -8,8 +8,8 @@ export class Component extends HTMLElement {
     this.template = null;
   }
 
-  setState(callback) {
-    this.state = callback(this.state);
+  setState(state) {
+    this.state = state;
     this.compile();
   }
 
@@ -21,6 +21,7 @@ export class Component extends HTMLElement {
 
   connectedCallback() {
     this.compile();
+    this.componentDidMount();
   }
 
   disconnectedCallback() {
