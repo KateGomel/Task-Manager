@@ -1,12 +1,8 @@
-<Header class="h-60 bg-red-500">
-    <h1 class="text-center">
-        <span class="text-green-400">{{ name }}</span>
-        <span class="text-yellow-300">{{ last }}</span>
-       <p>
-        <button class="plus text-black">+</button>
-        <button class="content text-black">{{ count }}</button>
-        <button class=" text-black">-</button>
-       </p>
-    </h1>
-    
-</Header>
+<div>
+    <app-router>
+        <app-route path="/" title="Home Page" component="home-page"></app-route>
+        <app-route path="/board/:id" title="Board Page" component="board-page"></app-route>
+        <app-route path="/404" title="404 | Not Found" component="not-found"></app-route>
+        <app-outlet></app-outlet>
+    </app-router>
+</div>

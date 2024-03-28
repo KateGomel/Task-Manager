@@ -1,8 +1,8 @@
 import Handlebars from "handlebars";
+
 export class Component extends HTMLElement {
   constructor() {
     super();
-
     this.state = {};
     this.props = {};
     this.template = null;
@@ -21,7 +21,7 @@ export class Component extends HTMLElement {
 
   connectedCallback() {
     this.compile();
-    this.componentDidMount();
+    this.componentDidMount()
   }
 
   disconnectedCallback() {
@@ -29,6 +29,5 @@ export class Component extends HTMLElement {
   }
 
   componentDidMount() {}
-
   componentWillUnmount() {}
 }
