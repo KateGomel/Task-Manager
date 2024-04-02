@@ -18,7 +18,7 @@ export class SignIn extends Component {
       errors: {
         email: "",
       },
-      isLoading: true,
+      isLoading: false,
     };
 
     this.template = template({
