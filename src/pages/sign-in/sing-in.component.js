@@ -13,4 +13,4 @@ export class SingIp extends Component {
   }
 }
 
-customElements.define("sing-in", SingIp);
+customElements.define("sing-in-page", SingIp);

@@ -4,10 +4,11 @@ import template from "./button.template.hbs";
 export class Button extends Component {
   constructor() {
     super();
+
     this.template = template();
     this.state = {
       caption: this.getAttribute("caption"),
-      classname: this.getAttribute("class-name"),
+      className: this.getAttribute("class-name"),
     };
   }
 }

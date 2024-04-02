@@ -8,4 +8,4 @@ export class SingUp extends Component {
   }
 }
 
-customElements.define("sing-up", SingUp);
+customElements.define("sing-up-page", SingUp);

@@ -7,11 +7,12 @@ export class Input extends Component {
 
     this.template = template();
     this.state = {
+      type: this.getAttribute("type") ?? "text",
+      value: this.getAttribute("value") ?? "",
+      placeholder: this.getAttribute("placeholder") ?? "",
       label: this.getAttribute("label"),
       name: this.getAttribute("name"),
-      type: this.getAttribute("type") ?? "text",
-      placeholder: this.getAttribute("placeholder") ?? "",
-      value: this.getAttribute("value") ?? "",
+      className: this.getAttribute("class-name"),
     };
   }
 }
