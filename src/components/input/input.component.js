@@ -4,15 +4,16 @@ import template from "./input.template.hbs";
 export class Input extends Component {
   constructor() {
     super();
-
-    this.template = template();
+    this.template = template({
+      error: this.getAttribute("error"),
+    });
     this.state = {
       type: this.getAttribute("type") ?? "text",
       value: this.getAttribute("value") ?? "",
       placeholder: this.getAttribute("placeholder") ?? "",
       label: this.getAttribute("label"),
-      name: this.getAttribute("name"),
       className: this.getAttribute("class-name"),
+      name: this.getAttribute("name"),
     };
   }
 }

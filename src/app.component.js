@@ -8,8 +8,10 @@ import "./pages/home/home.component";
 import "./pages/not-found/not-found.component";
 import "./pages/board/board.component";
 import "./pages/dashboard/dashboard.component";
-import "./pages/sign-in/sing-in.component";
-import "./pages/sign-up/sing-up.component";
+import "./pages/sign-in/sign-in.component";
+import "./pages/sign-up/sign-up.component";
+
+import "./components/toast/toast.component";
 
 export class App extends Component {
   constructor() {
