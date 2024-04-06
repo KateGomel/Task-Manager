@@ -1,7 +1,14 @@
 import { Component } from "../../core/Component";
 import template from "./dashboard.template.hbs";
 import { apiService } from "../../services/Api";
+import { mapResponseApiData } from "../../utils/api";
 import { useUserStore } from "../../hooks/useUserStore";
+import { authService } from "../../services/Auth";
+import { useToastNotification } from "../../hooks/useToastNotification";
+import { TOAST_TYPE } from "../../constants/toast";
+import { useNavigate } from "../../hooks/useNavigate";
+import { ROUTES } from "../../constants/routes";
+import { store } from "../../store/Store";
 
 export class Dashboard extends Component {
   constructor() {
@@ -12,32 +19,65 @@ export class Dashboard extends Component {
     this.state = {
       isLoading: false,
       user: null,
-      boars: [],
+      boards: [],
     };
   }
 
-  openCreateBoartModal() {}
+  toggleIsLoading = () => {
+    this.setState({
+      ...this.state,
+      isLoading: !this.state.isLoading,
+    });
+  };
+
+  openCreateBoardModal() {}
 
   openDeleteBoardModal() {}
 
   get() {}
 
+  logout = () => {
+    this.toggleIsLoading();
+    const { setUser } = useUserStore();
+    authService
+      .logOut()
+      .then(() => {
+        setUser(null);
+        useToastNotification({ type: TOAST_TYPE.success, message: "Success!" });
+        useNavigate(ROUTES.signIn);
+      })
+      .catch(({ message }) => {
+        useToastNotification({ message });
+      })
+      .finally(() => {
+        this.toggleIsLoading();
+      });
+  };
+
   onClick = ({ target }) => {
     if (target.closest(".create-board")) {
-      this.openCreateBoartModal;
+      this.openCreateBoardModal();
     }
+
     if (target.closest(".delete-board")) {
       this.openDeleteBoardModal();
+    }
+
+    if (target.closest(".logout-btn")) {
+      this.logout();
     }
   };
 
   setUser() {
     const { getUser } = useUserStore();
-    this.setState({ ...this.state, user: getUser() });
+    this.setState({
+      ...this.state,
+      user: getUser(),
+    });
   }
 
   componentDidMount() {
-    this.setState();
+    this.setUser();
     this.addEventListener("click", this.onClick);
   }
 

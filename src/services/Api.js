@@ -4,24 +4,24 @@ class ApiService {
   constructor() {
     this.apiInstance = axios.create({
       baseURL:
-        "https://task-manager-7c59c-default-rtdb.europe-west1.firebasedatabase.app",
+        "https://task-manager-students-default-rtdb.europe-west1.firebasedatabase.app",
     });
   }
 
-  post(url, data = {}, header = {}) {
-    return this.apiInstance.post(url.concat(".json"), data, header);
+  post(url, data = {}, headers = {}) {
+    return this.apiInstance.post(url.concat(".json"), data, headers);
   }
 
-  get(url, header) {
-    return this.apiInstance.get(url.concat(".json"), header);
+  get(url, headers = {}) {
+    return this.apiInstance.get(url.concat(".json"), headers);
   }
 
-  patch(url, data, header) {
-    return this.apiInstance.patch(url.concat(".json"), data, header);
+  patch(url, data, headers = {}) {
+    return this.apiInstance.patch(url.concat(".json"), data, headers);
   }
 
-  delete(url, header = {}) {
-    return this.apiInstance.delete(url.concat(".json"), header);
+  delete(url, headers = {}) {
+    return this.apiInstance.delete(url.concat(".json"), headers);
   }
 }
 
