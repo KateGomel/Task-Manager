@@ -16,4 +16,4 @@ export class Firebase {
     return this._app;
   }
 }
-export const fireBaseService = new Firebase();
+export const firebaseService = new Firebase();
