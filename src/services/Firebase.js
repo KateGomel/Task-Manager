@@ -4,11 +4,11 @@ export class Firebase {
   constructor() {
     this._app = initializeApp({
       apiKey: import.meta.env.VITE_API_KEY,
-      authDomain: "task-manager-students.firebaseapp.com",
-      projectId: "task-manager-students",
-      storageBucket: "task-manager-students.appspot.com",
-      messagingSenderId: "635966678775",
-      appId: "1:635966678775:web:7353effcc8711faf6855f2",
+      authDomain: "task-manager-7c59c.firebaseapp.com",
+      projectId: "task-manager-7c59c",
+      storageBucket: "task-manager-7c59c.appspot.com",
+      messagingSenderId: "609245358669",
+      appId: "1:609245358669:web:0e1841e8c03bdd6f30ca04",
     });
   }
 
@@ -16,5 +16,4 @@ export class Firebase {
     return this._app;
   }
 }
-
-export const firebaseService = new Firebase();
+export const fireBaseService = new Firebase();
