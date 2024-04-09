@@ -16,6 +16,7 @@ import "./components/input/input.component";
 import "./components/button/button.component";
 import "./components/loader/loader.component";
 import "./components/modal/modal.component";
+import "./components/create-board-form/create-board-form.component";
 
 import { authService } from "./services/Auth";
 import { useToastNotification } from "./hooks/useToastNotification";

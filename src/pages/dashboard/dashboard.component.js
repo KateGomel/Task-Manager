@@ -10,6 +10,8 @@ import { useNavigate } from "../../hooks/useNavigate";
 import { ROUTES } from "../../constants/routes";
 import { store } from "../../store/Store";
 import { useModal } from "../../hooks/useModal";
+import { log } from "handlebars";
+import { extractFormData } from "../../utils/extractFormData";
 
 export class Dashboard extends Component {
   constructor() {
@@ -34,6 +36,12 @@ export class Dashboard extends Component {
   openCreateBoardModal() {
     useModal({
       isOpen: true,
+      template: "ui-create-board-form",
+      onSuccess: (modal) => {
+        const form = modal.querySelector(".create-board-form");
+        const formData = extractFormData(form);
+        console.log(formData);
+      },
     });
   }
 
