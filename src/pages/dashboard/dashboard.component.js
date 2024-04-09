@@ -9,6 +9,7 @@ import { TOAST_TYPE } from "../../constants/toast";
 import { useNavigate } from "../../hooks/useNavigate";
 import { ROUTES } from "../../constants/routes";
 import { store } from "../../store/Store";
+import { useModal } from "../../hooks/useModal";
 
 export class Dashboard extends Component {
   constructor() {
@@ -30,7 +31,11 @@ export class Dashboard extends Component {
     });
   };
 
-  openCreateBoardModal() {}
+  openCreateBoardModal() {
+    useModal({
+      isOpen: true,
+    });
+  }
 
   openDeleteBoardModal() {}
 
