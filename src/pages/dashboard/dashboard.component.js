@@ -11,7 +11,7 @@ import { ROUTES } from "../../constants/routes";
 import { store } from "../../store/Store";
 import { useModal } from "../../hooks/useModal";
 import { extractFormData } from "../../utils/extractFormData";
-import { createBoardApi, getBoardsApi } from "../../api/boards";
+import { createBoardApi, getBoardsApi, deleteBoardApi } from "../../api/boards";
 
 export class Dashboard extends Component {
   constructor() {
@@ -40,7 +40,7 @@ export class Dashboard extends Component {
         .then(({ data }) => {
           this.setState({
             ...this.state,
-            boards: mapResponseApiData(data),
+            boards: data ? mapResponseApiData(data) : [],
           });
         })
         .catch(({ message }) => {
@@ -78,7 +78,30 @@ export class Dashboard extends Component {
     });
   }
 
-  openDeleteBoardModal() {}
+  openDeleteBoardModal({ id, title }) {
+    useModal({
+      isOpen: true,
+      confirmation: `Do you ready delete "${title}"`,
+      successCaption: "Delete",
+      onSuccess: () => {
+        this.toggleIsLoading();
+        deleteBoardApi(this.state.user.uid, id)
+          .then(() => {
+            this.loadAllBoards();
+            useToastNotification({
+              message: `Board ${title} was delete`,
+              type: TOAST_TYPE.success,
+            });
+          })
+          .catch(({ message }) => {
+            useToastNotification({ message });
+          })
+          .finally(() => {
+            this.toggleIsLoading();
+          });
+      },
+    });
+  }
 
   get() {}
 
@@ -106,13 +129,15 @@ export class Dashboard extends Component {
     const createBoardBtn = target.closest(".create-board");
     const deleteBoardBtn = target.closest(".delete-board");
 
-    if (createBoardBtn) {
-      this.openCreateBoardModal();
-      return;
+    if (deleteBoardBtn) {
+      return this.openDeleteBoardModal({
+        id: deleteBoardBtn.dataset.id,
+        title: deleteBoardBtn.dataset.title,
+      });
     }
 
-    if (deleteBoardBtn) {
-      this.openDeleteBoardModal();
+    if (createBoardBtn) {
+      this.openCreateBoardModal();
       return;
     }
 
