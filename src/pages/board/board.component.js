@@ -1,16 +1,12 @@
 import { Component } from "../../core/Component";
 import template from "./board.template.hbs";
 import { useUserStore } from "../../hooks/useUserStore";
+import { INITIAL_STATE } from "./initialState";
 
 export class BoardPage extends Component {
   constructor() {
     super();
-    this.state = {
-      boardId: null,
-      user: null,
-      isLoading: false,
-    };
-
+    this.state = INITIAL_STATE;
     this.template = template();
   }
 
@@ -21,6 +17,10 @@ export class BoardPage extends Component {
       boardId: this.getAttribute("id"),
       user: getUser(),
     });
+  }
+
+  componentDidMount() {
+    this.initialization();
   }
 }
 

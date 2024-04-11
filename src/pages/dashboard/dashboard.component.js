@@ -11,7 +11,7 @@ import { ROUTES } from "../../constants/routes";
 import { store } from "../../store/Store";
 import { useModal } from "../../hooks/useModal";
 import { extractFormData } from "../../utils/extractFormData";
-import { createBoardApi, getBoardsApi, deleteBoardApi } from "../../api/boards";
+import { createBoardApi, deleteBoardApi, getBoardsApi } from "../../api/boards";
 
 export class Dashboard extends Component {
   constructor() {
@@ -81,7 +81,7 @@ export class Dashboard extends Component {
   openDeleteBoardModal({ id, title }) {
     useModal({
       isOpen: true,
-      confirmation: `Do you ready delete "${title}"`,
+      confirmation: `Do you really want to delete "${title}"`,
       successCaption: "Delete",
       onSuccess: () => {
         this.toggleIsLoading();
@@ -89,7 +89,7 @@ export class Dashboard extends Component {
           .then(() => {
             this.loadAllBoards();
             useToastNotification({
-              message: `Board ${title} was delete`,
+              message: `Board "${title}" was deleted`,
               type: TOAST_TYPE.success,
             });
           })
@@ -100,10 +100,23 @@ export class Dashboard extends Component {
             this.toggleIsLoading();
           });
       },
+      // onSuccess: async () => {
+      //   this.toggleIsLoading();
+      //   try {
+      //     await deleteBoardApi(this.state.user.uid, id);
+      //     await this.loadAllBoards();
+      //     useToastNotification({
+      //       message: "Success!",
+      //       type: TOAST_TYPE.success,
+      //     });
+      //   } catch ({ message }) {
+      //     useToastNotification({ message });
+      //   } finally {
+      //     this.toggleIsLoading();
+      //   }
+      // },
     });
   }
-
-  get() {}
 
   logout = () => {
     this.toggleIsLoading();
@@ -124,8 +137,8 @@ export class Dashboard extends Component {
   };
 
   onClick = ({ target }) => {
-    const dataItem = target.closest(".board-item");
-    const logAut = target.closest(".logout-btn");
+    const boardItem = target.closest(".board-item");
+    const logoutBtn = target.closest(".logout-btn");
     const createBoardBtn = target.closest(".create-board");
     const deleteBoardBtn = target.closest(".delete-board");
 
@@ -137,18 +150,15 @@ export class Dashboard extends Component {
     }
 
     if (createBoardBtn) {
-      this.openCreateBoardModal();
-      return;
+      return this.openCreateBoardModal();
     }
 
-    if (logAut) {
-      this.logout();
-      return;
+    if (logoutBtn) {
+      return this.logout();
     }
 
-    if (dataItem) {
-      useNavigate(`${ROUTES.board}/${dataItem.dataset.id}`);
-      return;
+    if (boardItem) {
+      return useNavigate(`${ROUTES.board}/${boardItem.dataset.id}`);
     }
   };
 
