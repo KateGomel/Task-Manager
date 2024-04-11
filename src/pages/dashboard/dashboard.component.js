@@ -101,16 +101,29 @@ export class Dashboard extends Component {
   };
 
   onClick = ({ target }) => {
-    if (target.closest(".create-board")) {
+    const dataItem = target.closest(".board-item");
+    const logAut = target.closest(".logout-btn");
+    const createBoardBtn = target.closest(".create-board");
+    const deleteBoardBtn = target.closest(".delete-board");
+
+    if (createBoardBtn) {
       this.openCreateBoardModal();
+      return;
     }
 
-    if (target.closest(".delete-board")) {
+    if (deleteBoardBtn) {
       this.openDeleteBoardModal();
+      return;
     }
 
-    if (target.closest(".logout-btn")) {
+    if (logAut) {
       this.logout();
+      return;
+    }
+
+    if (dataItem) {
+      useNavigate(`${ROUTES.board}/${dataItem.dataset.id}`);
+      return;
     }
   };
 
