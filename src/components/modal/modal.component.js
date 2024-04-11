@@ -1,12 +1,13 @@
-import { INITIAL_STATE } from "../../constants/constants";
 import { EVENT_TYPES } from "../../constants/eventTypes";
 import { Component } from "../../core/Component";
 import { eventEmitter } from "../../core/EventEmitter";
+import { INITIAL_STATE } from "./constants";
 import template from "./modal.template.hbs";
 
-export class ModaL extends Component {
+export class Modal extends Component {
   constructor() {
     super();
+
     this.template = template();
     this.state = INITIAL_STATE;
   }
@@ -40,7 +41,6 @@ export class ModaL extends Component {
     if (evt.target.closest(".modal-reject-trigger")) {
       this.closeModal();
     }
-
     if (evt.target.closest(".modal-success-trigger")) {
       this.onSuccess();
     }
@@ -48,12 +48,15 @@ export class ModaL extends Component {
 
   componentDidMount() {
     eventEmitter.on(EVENT_TYPES.modal, this.modalHandler);
+    eventEmitter.on("form:error", this.validateForm);
     this.addEventListener("click", this.onClick);
   }
 
   componentWillUnmount() {
     eventEmitter.off(EVENT_TYPES.modal, this.modalHandler);
+    eventEmitter.off("form:error", this.validateForm);
     this.removeEventListener("click", this.onClick);
   }
 }
-customElements.define("ui-modal", ModaL);
+
+customElements.define("ui-modal", Modal);

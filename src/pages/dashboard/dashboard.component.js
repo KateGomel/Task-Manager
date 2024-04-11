@@ -10,8 +10,8 @@ import { useNavigate } from "../../hooks/useNavigate";
 import { ROUTES } from "../../constants/routes";
 import { store } from "../../store/Store";
 import { useModal } from "../../hooks/useModal";
-import { log } from "handlebars";
 import { extractFormData } from "../../utils/extractFormData";
+import { createBoardApi, getBoardsApi } from "../../api/boards";
 
 export class Dashboard extends Component {
   constructor() {
@@ -33,6 +33,25 @@ export class Dashboard extends Component {
     });
   };
 
+  loadAllBoards = () => {
+    if (this.state.user?.uid) {
+      this.toggleIsLoading();
+      getBoardsApi(this.state.user.uid)
+        .then(({ data }) => {
+          this.setState({
+            ...this.state,
+            boards: mapResponseApiData(data),
+          });
+        })
+        .catch(({ message }) => {
+          useToastNotification({ message });
+        })
+        .finally(() => {
+          this.toggleIsLoading();
+        });
+    }
+  };
+
   openCreateBoardModal() {
     useModal({
       isOpen: true,
@@ -40,7 +59,21 @@ export class Dashboard extends Component {
       onSuccess: (modal) => {
         const form = modal.querySelector(".create-board-form");
         const formData = extractFormData(form);
-        console.log(formData);
+        this.toggleIsLoading();
+        createBoardApi(this.state.user.uid, formData)
+          .then(({ data }) => {
+            useNavigate(`${ROUTES.board}/${data.name}`);
+            useToastNotification({
+              message: "Success!",
+              type: TOAST_TYPE.success,
+            });
+          })
+          .catch(({ message }) => {
+            useToastNotification({ message });
+          })
+          .finally(() => {
+            this.toggleIsLoading();
+          });
       },
     });
   }
@@ -91,6 +124,7 @@ export class Dashboard extends Component {
 
   componentDidMount() {
     this.setUser();
+    this.loadAllBoards();
     this.addEventListener("click", this.onClick);
   }
 
