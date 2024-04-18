@@ -22,6 +22,7 @@ import "./components/loader/loader.component";
 import "./components/modal/modal.component";
 import "./components/create-board-form/create-board-form-components";
 import "./components/task-card/task-card.component";
+import "./components/create-task-form/create-task-form.component";
 
 export class App extends Component {
   constructor() {
