@@ -28,6 +28,9 @@ export class BoardPage extends Component {
       title: "Create Task",
       successCaption: "Create",
       template: "ui-create-task-form",
+      onSuccess: () => {
+        console.log("Success!!!");
+      },
     });
   };
 
