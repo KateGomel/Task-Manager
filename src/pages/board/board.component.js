@@ -2,8 +2,8 @@ import { Component } from "../../core/Component";
 import template from "./board.template.hbs";
 import { useUserStore } from "../../hooks/useUserStore";
 import { INITIAL_STATE } from "./initialState";
-import { ROUTES } from "../../constants/routes";
 import { useNavigate } from "../../hooks/useNavigate";
+import { ROUTES } from "../../constants/routes";
 import { useModal } from "../../hooks/useModal";
 
 export class BoardPage extends Component {
@@ -34,11 +34,15 @@ export class BoardPage extends Component {
     });
   };
 
-  onClick = (evt) => {
-    if (evt.target.closest(".go-to-dashboard")) {
+  onClick = ({ target }) => {
+    const goToDashboard = target.closest(".go-to-dashboard");
+    const createTaskBtn = target.closest(".create-task-btn");
+
+    if (goToDashboard) {
       useNavigate(ROUTES.dashboard);
     }
-    if (evt.target.closest(".create-task-btn")) {
+
+    if (createTaskBtn) {
       this.openCreateTaskModal();
     }
   };
@@ -46,10 +50,6 @@ export class BoardPage extends Component {
   componentDidMount() {
     this.initialization();
     this.addEventListener("click", this.onClick);
-  }
-
-  componentWillUnmount() {
-    this.removeEventListener("click", this.onClick);
   }
 }
 
