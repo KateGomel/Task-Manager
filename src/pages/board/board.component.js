@@ -17,6 +17,13 @@ export class BoardPage extends Component {
     this.template = template();
   }
 
+  toggleIsLoading = () => {
+    this.setState({
+      ...this.state,
+      isLoading: !this.state.isLoading,
+    });
+  };
+
   initialization() {
     const { getUser } = useUserStore();
     this.setState({
@@ -55,7 +62,7 @@ export class BoardPage extends Component {
           ...extractFormData(form),
           attachments: formData.getAll("attachments"),
         };
-
+        this.toggleIsLoading();
         this.uploadAttachments(preparedData.attachments)
           .then(this.loadAttachmentsUrl)
           .then((data) => {
@@ -69,6 +76,12 @@ export class BoardPage extends Component {
                 createdAT: new Date(),
               },
             });
+          })
+          .catch(({ message }) => {
+            useToastNotification({ message });
+          })
+          .finally(() => {
+            this.toggleIsLoading();
           });
       },
     });
