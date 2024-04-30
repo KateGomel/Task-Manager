@@ -10,7 +10,7 @@
     "firebase:login": "firebase login",
     "firebase:logout": "firebase logout",
     "firebase:init": "firebase init",
-    "firebase:deploy": "firebase deploy"
+    "firebase:deploy": "vite build && firebase deploy"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.19",
